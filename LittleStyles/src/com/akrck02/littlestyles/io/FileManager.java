@@ -20,7 +20,7 @@ public class FileManager {
         String extension = name[name.length - 1];
 
         if(extension.equals("css")){
-            Logger.log("   File: " + file.getAbsolutePath());
+            Logger.log(Logger.Status.INFO, "   File: " + file.getAbsolutePath());
             addToMaster(file,master);
         }
 
@@ -40,10 +40,7 @@ public class FileManager {
 
                 if (line.contains("@import") && !line.contains("http")) {
                     String url = line.substring(line.indexOf("\".")+1,line.lastIndexOf("\""));
-                    Logger.log(url);
-
                     String localURL = file.getAbsolutePath().substring(0,file.getAbsolutePath().lastIndexOf("\\")) + url;
-                    Logger.log(localURL);
 
                     addToMaster(new File(localURL), master);
                 }else {
