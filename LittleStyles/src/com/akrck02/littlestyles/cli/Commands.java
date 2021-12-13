@@ -1,6 +1,6 @@
 package com.akrck02.littlestyles.cli;
 
-import com.akrck02.littlestyles.cli.Configurations.ConfigurationsBuilder;
+import com.akrck02.littlestyles.exception.ConfigurationException;
 import com.akrck02.littlestyles.io.FileManager;
 import com.akrck02.littlestyles.io.ConfigReader;
 
@@ -23,23 +23,29 @@ public class Commands {
     public static void handle(String[] args){
 
         List<String> arguments = Arrays.asList(args);
-        ConfigurationsBuilder builder = new ConfigurationsBuilder();
 
         if(arguments.contains("-h")) {
             help();
             return;
         }
 
-        File configFile = new File("./styles.config");
-        if(!configFile.exists()){
-            Logger.log(INFO, "Config file not found.");
+        if(arguments.contains("-g")) {
+            generateConfigurationFile();
             return;
         }
 
-        Configurations config = ConfigReader.read(configFile);
+        File configFile = new File("./styles.config");
+        if(!configFile.exists()){
+            Logger.log(INFO, "Config file not found.");
+            Logger.log(INFO, "Generate new configuration file using lit -g.");
+            return;
+        }
 
-        if(config != null)
+        try {
+            Configurations config = ConfigReader.read(configFile);
             minify(config);
+        } catch (ConfigurationException e){ Logger.log(Logger.Status.ERROR, e.getMessage());}
+
     }
 
     /**
@@ -49,11 +55,18 @@ public class Commands {
     public static void help() {
         log(Logger.Status.NONE, " Little styles help: ");
         log(Logger.Status.NONE, "------------------------------------------------------");
-        log(Logger.Status.NONE, "-i : Input directory");
-        log(Logger.Status.NONE, "-o : Output directory");
-        log(Logger.Status.NONE, "-n : Output filename");
+        log(Logger.Status.NONE, "-g : Generate configuration file");
         log(Logger.Status.NONE, "-h : Useful help");
-        log(Logger.Status.NONE, "\n Minify creates a ./dist/ directory by default to store the generated sources.");
+        log(Logger.Status.NONE, "\n Lit creates a ./dist/ directory by default to store the generated sources.");
+    }
+
+    /**
+     * Generate a configuration file in current directory
+     */
+    public static void generateConfigurationFile() {
+
+
+
     }
 
     /**
@@ -79,12 +92,9 @@ public class Commands {
 
             master.close();
         } catch (IOException e) {
-            //e.printStackTrace();
             log(Logger.Status.ERROR, "Cannot compile this version.");
         }
     }
-
-
 
 
 }

@@ -10,14 +10,14 @@ public class FileManager {
      *
      * @param file The current file or directory
      */
-    public static void access(File file, BufferedWriter master) {
+    public static void access(final File file, final BufferedWriter master) {
 
         if (file.isDirectory()) {
             return;
         }
 
-        String[] name = file.getName().split("\\.");
-        String extension = name[name.length - 1];
+        final String[] name = file.getName().split("\\.");
+        final String extension = name[name.length - 1];
 
         if(extension.equals("css")){
             Logger.log(Logger.Status.INFO, "   File: " + file.getAbsolutePath());
@@ -28,19 +28,18 @@ public class FileManager {
 
     /**
      * Add file to master
-     *
      * @param file The current file
      */
-    public static void addToMaster(File file, BufferedWriter master) {
+    public static void addToMaster(final File file, final BufferedWriter master) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+            final BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
             String line = "";
 
             while (line != null) {
 
                 if (line.contains("@import") && !line.contains("http")) {
-                    String url = line.substring(line.indexOf("\".")+1,line.lastIndexOf("\""));
-                    String localURL = file.getAbsolutePath().substring(0,file.getAbsolutePath().lastIndexOf("\\")) + url;
+                    final String url = line.substring(line.indexOf("\".")+1,line.lastIndexOf("\""));
+                    final String localURL = file.getAbsolutePath().substring(0,file.getAbsolutePath().lastIndexOf("\\")) + url;
 
                     addToMaster(new File(localURL), master);
                 }else {
@@ -60,8 +59,13 @@ public class FileManager {
             bufferedReader.close();
 
         } catch (IOException ignored) {
+            Logger.log(Logger.Status.INFO, file.getAbsolutePath() + " failed to write.");
         }
     }
 
+
+    public static void generateConfigurationFile(){
+
+    }
 
 }
