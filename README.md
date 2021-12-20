@@ -11,5 +11,5 @@ A little css minifier made in java ;)
 ## Using LittleStyles
 Use the latest binary with
 ```shell
-  java -jar ./littleStyles.jar
+  java -jar ./lit-v1.0.jar
 ``` 
