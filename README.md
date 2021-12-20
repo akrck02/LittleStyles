@@ -3,9 +3,10 @@ A little css minifier made in java ;)
 
 ## Configuration file
 ```styleconfig
-  input:  ./your/input/url.css
-  output: ./your/output/directory
-  name:   master.css
+  input:      ./your/input/url.css
+  output:     ./your/output/directory
+  name:       master.css
+  readable:   false
 ```
 
 ## Using LittleStyles
