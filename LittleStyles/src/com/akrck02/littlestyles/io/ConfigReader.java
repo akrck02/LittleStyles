@@ -27,15 +27,18 @@ public class ConfigReader {
             String input = lines.get(0).split(":")[1].trim();
             String output = lines.get(1).split(":")[1].trim();
             String name = lines.get(2).split(":")[1].trim();
+            boolean readable = Boolean.parseBoolean(lines.get(3).split(":")[1].trim());
 
             Logger.log(INFO, "input: " + input);
             Logger.log(INFO,"output: " + output);
             Logger.log(INFO, "name: " + name);
+            Logger.log(INFO, "readable: " + readable);
 
             return new ConfigurationsBuilder()
                     .setInput(input)
                     .setOutput(output)
                     .setName(name)
+                    .setReadable(readable)
                     .build();
 
         } catch (IOException e) {

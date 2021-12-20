@@ -20,7 +20,7 @@ public class Commands {
      * Handle commands reading options
      * @param args CLI arguments
      */
-    public static void handle(String[] args){
+    public static void handle(final String[] args){
 
         List<String> arguments = Arrays.asList(args);
 
@@ -64,16 +64,14 @@ public class Commands {
      * Generate a configuration file in current directory
      */
     public static void generateConfigurationFile() {
-
-
-
+        FileManager.generateConfigurationFile();
     }
 
     /**
      * Minify the CSS code.
      * @param config The command line interface configurations
      */
-    public static void minify(Configurations config) {
+    public static void minify(final Configurations config) {
         try {
 
             File dir = new File(config.getInput());
@@ -88,7 +86,7 @@ public class Commands {
                     log(Logger.Status.INFO, "Created file " + outputFile.getAbsolutePath());
 
             BufferedWriter master = new BufferedWriter(new FileWriter(outputFile));
-            FileManager.access(dir,master);
+            FileManager.access(config, dir, master);
 
             master.close();
         } catch (IOException e) {

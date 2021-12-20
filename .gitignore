@@ -1,3 +1,7 @@
 test
 bin
 *.class
+out
+lit.jar
+LittleStyles.jar
+v*.*.jar

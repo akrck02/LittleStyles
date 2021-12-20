@@ -8,6 +8,7 @@ public class Configurations {
     private String input;
     private String output;
     private String name;
+    private boolean readable;
 
     private Configurations() {}
 
@@ -34,6 +35,15 @@ public class Configurations {
         return this;
     }
 
+    public Configurations setReadable(boolean readable) {
+        this.readable = readable;
+        return this;
+    }
+
+    public boolean isReadable() {
+        return readable;
+    }
+
     public String getOutput() {
         return output;
     }
@@ -52,11 +62,13 @@ public class Configurations {
         private String input;
         private String output;
         private String name;
+        private boolean readable;
 
         public ConfigurationsBuilder() {
             this.input = "./";
             this.output = "./";
             this.name = "master.css";
+            this.readable = false;
         }
 
         public ConfigurationsBuilder setInput(String input) {
@@ -74,11 +86,17 @@ public class Configurations {
             return this;
         }
 
+        public ConfigurationsBuilder setReadable(boolean readable) {
+            this.readable = readable;
+            return this;
+        }
+
         public Configurations build(){
             return new Configurations()
             .setInput(this.input)
             .setName(this.name)
-            .setOutput(this.output);
+            .setOutput(this.output)
+            .setReadable(this.readable);
         }
     }
 }
